@@ -23,42 +23,85 @@ public class Main {
 //		add the planets 
 		ArrayList<Integer> planets = new ArrayList<Integer>();
 		planets.add(47);
-		planets.add(37);
+		planets.add(45);
+		planets.add(07);
 		
 		buildNeighbor(blackholes);
 		
 		Graph g = new Graph();
 		
-		ArrayList<Node> sample = g.breadthFirstTraversal(array[7][7], array[4][7]);
-		System.out.println(sample.size());
-		for(int i = 0; i < sample.size(); i++){
-			System.out.println(sample.get(i));
-		}
-		System.out.println("Distace to 37");
-		resetArray(blackholes);
-		sample = g.breadthFirstTraversal(array[7][7], array[3][7]);
-		System.out.println(sample.size());
-		for(int i = 0; i < sample.size(); i++){
-			System.out.println(sample.get(i));
-		}
-		
 		
 //		77 to closest
-		ArrayList<ArrayList<Node>> path = new ArrayList<ArrayList<Node>>();
-		for(int i = 0; i < planets.size(); i++){
+		ArrayList<Node> path = g.breadthFirstTraversal(array[7][7], getNode(planets.get(0)));
+//		System.out.println(path);
+		for(int i = 1; i < planets.size(); i++){
+			resetArray(blackholes);
 			ArrayList<Node> temp = g.breadthFirstTraversal(array[7][7], getNode(planets.get(i)));
-			System.out.println(temp.size());
+//			System.out.println(temp.size());
+			if(path.size() > temp.size()){
+				path = temp;
+			}
+		}
+		resetArray(blackholes);
+		
+//		System.out.println("after first clost" + path);
+		
+//		System.out.println(path.size());
+//		System.out.println("last node" + path.get(path.size()-1));
+		
+		System.out.println("So we picked first" + path);
+		
+//		Node lastPlanet = path.get(path.size()-1);
+		
+		
+//		System.out.println("her" + lastPlanet.toDigit());
+//		System.out.println(getNode(lastPlanet).hashCode());
+		
+//		planets.remove((Object)lastPlanet.toDigit());
+		
+		
+//		System.out.println("from " + lastPlanet + " to " + planets.get(0));
+//		ArrayList<Node> testPath = g.breadthFirstTraversal(getNode(lastPlanet), getNode(planets.get(0)));
+//		System.out.println(testPath);
+		
+		for(int i = 0; i < planets.size(); i++){
+			resetArray(blackholes);
+			Node lastPlanet = path.get(path.size()-1);
+			path.remove(lastPlanet);
+			System.out.println("removing " + lastPlanet.toDigit());
+			planets.remove((Object)lastPlanet.toDigit());
+			
+			ArrayList<Node> testPath = g.breadthFirstTraversal(getNode(lastPlanet), getNode(planets.get(0)));
+			System.out.println("from upre" + lastPlanet + "/" + getNode(lastPlanet) + " to " + getNode(planets.get(0)) + " " + testPath);
+			
+			for(int k = 1; k < planets.size(); k++){
+				resetArray(blackholes);
+				ArrayList<Node> temp = g.breadthFirstTraversal(getNode(lastPlanet), getNode(planets.get(k)));
+				System.out.println("from " + lastPlanet + " to " + getNode(planets.get(k)) + " " + temp);
+				System.out.println(temp.size());
+				if(testPath.size() > temp.size()){
+					testPath = temp;
+				}
+			}
+			
+			for(int c = 0; c < testPath.size(); c++){
+				path.add(testPath.get(c));
+			}
+			
+			System.out.println("path at this point" + path);
 		}
 		
-		
 //		
-//		print distance
-//		System.out.println("Short distance");
-//		for(int i = 0; i < path.size(); i++){
-//			System.out.println(path.get(i).size());
-//		}
-		
-		
+		System.out.println(path);
+//		connecting to last
+		resetArray(blackholes);
+		Node lastPlanet = path.get(path.size()-1);
+		path.remove(lastPlanet);
+		ArrayList<Node> testPath = g.breadthFirstTraversal(getNode(lastPlanet), array[0][0]);
+		for(int c = 0; c < testPath.size(); c++){
+			path.add(testPath.get(c));
+		}
+		System.out.println(path);
 	}
 
 
@@ -80,13 +123,18 @@ public class Main {
 		}
 	}
 	
-	private static Node getNode(int node){
-		int x = node / 10;
-		int y = node % 10;
+	private static Node getNode(Node node){
+		int x = node.x;
+		int y = node.y;
 		
 		return array[x][y];
 	}
 	
+	private static Node getNode(int xy){
+		int x = xy / 10;
+		int y = xy % 10;
+		return array[x][y];
+	}
 	
 	private static void buildNeighbor(ArrayList<Node> blackholes) {
 //		 it builds the neighbor starting from the source node and then reaching to all of them.

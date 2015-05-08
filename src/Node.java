@@ -31,4 +31,9 @@ public class Node {
 		}
 		System.out.println();
 	}
+	
+	public int toDigit(){
+		String sth = x + "" + y; 
+		return Integer.parseInt(sth);
+	}
 }

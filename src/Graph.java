@@ -35,16 +35,22 @@ public class Graph {
 		
 		
 //		
-		ArrayList<Node> path = new ArrayList<Node>();
+		
+		Stack<Node> path = new Stack<Node>();
 		int i = 0;
 		Node temp = destNode;
 		while(temp != null){
-			path.add(temp);
+			path.push(temp);
 //			System.out.println(temp);
 			temp = temp.parent;
 		}
 		
-		return path;
+		
+		ArrayList<Node> revertedPath = new ArrayList<Node>();
+		while(!path.isEmpty()){
+			revertedPath.add(path.pop());
+		}
+		return revertedPath;
 	}
 	
 }
