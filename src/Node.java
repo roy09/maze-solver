@@ -24,4 +24,11 @@ public class Node {
 		// TODO Auto-generated method stub
 		return Integer.toString(x)+ Integer.toString(y);
 	}
+	
+	public void printNeighbor(){
+		for(int i = 0; i < adjacentNodes.size(); i++){
+			System.out.print(adjacentNodes.get(i) + " ");
+		}
+		System.out.println();
+	}
 }
