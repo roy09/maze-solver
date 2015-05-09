@@ -137,6 +137,12 @@ public class Main {
 	
 	private static void buildNeighbor(ArrayList<Node> blackholes) {
 //		 it builds the neighbor starting from the source node and then reaching to all of them.
+//		update blackholes
+		ArrayList<Node> newBlackholes = new ArrayList<Node>();
+		for(int i = 0; i < blackholes.size(); i++){
+			newBlackholes.add(getNode(blackholes.get(i)));
+		}
+		blackholes = newBlackholes;
 //		avoids blackholes
 		for(int i = 0; i < 8; i++){
 			for(int j = 0; j < 8; j++){
