@@ -20,7 +20,7 @@ public class Main {
 		blackholes.add(array[0][2]);
 		blackholes.add(array[1][2]);
 		
-//		add the planets 
+//		add the planets s
 		ArrayList<Integer> planets = new ArrayList<Integer>();
 		planets.add(47);
 		planets.add(45);
@@ -29,7 +29,6 @@ public class Main {
 		buildNeighbor(blackholes);
 		
 		Graph g = new Graph();
-		
 		
 //		77 to closest
 		ArrayList<Node> path = g.breadthFirstTraversal(array[7][7], getNode(planets.get(0)));
